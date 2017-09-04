@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+
+<AnchorPane prefHeight="333.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+            <Tab text="table">
+               <content>
+                  <TreeTableView prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TreeTableColumn prefWidth="75.0" text="C1" />
+                      <TreeTableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TreeTableView>
+               </content>
+            </Tab>
+          <Tab text="text">
+               <content>
+                  <TextArea prefHeight="200.0" prefWidth="200.0" />
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
