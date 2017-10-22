@@ -3,7 +3,6 @@ package org.zhxie.main;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -24,8 +23,7 @@ public class MyFXCanvasTest {
 
       @Override
       public Control apply(Shell shell) {
-        Composite container = new Composite(shell, SWT.NONE);
-        FXCanvasComposite fxCanvas = new FXCanvasComposite(container, SWT.NONE, shell);
+        FXCanvasComposite fxCanvas = new FXCanvasComposite(shell, SWT.NONE, shell);
         new Thread(new AsyRunnableTask(shell,10000,600,400)).start();
         new Thread(new AsyRunnableTask(shell,20000,300, 200)).start();
         return fxCanvas;

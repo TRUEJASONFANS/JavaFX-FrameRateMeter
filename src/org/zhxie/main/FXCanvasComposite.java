@@ -11,10 +11,14 @@ import org.zhxie.component.OldFXCanvas;
 import org.zhxie.component.Recorder;
 
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 
 public class FXCanvasComposite extends Composite {
@@ -22,14 +26,16 @@ public class FXCanvasComposite extends Composite {
   private static int frameTimeIndex = 0;
   private static boolean arrayFilled = false;
 
-  @FXML
-  private Label label;
+  @FXML private Label label;
+  @FXML private TableView<String> tableView;
+  @FXML private TableColumn<String,String> nameCol;
+  @FXML private ListView<String> listView;
   private OldFXCanvas fxCanvas;
-  
+
   public FXCanvasComposite(Composite container, int style, Shell shell) {
     super(container, style);
-    container.setLayout(new GridLayout(1, false));
-    fxCanvas = new OldFXCanvas(container, SWT.NONE);
+    this.setLayout(new GridLayout(1, false));
+    fxCanvas = new OldFXCanvas(this, SWT.NONE);
     fxCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     VBox root = getRoot();
     AnimationTimer frameRateMeter = createAnimationTimer(label);
@@ -39,6 +45,13 @@ public class FXCanvasComposite extends Composite {
     frameRateMeter.start();
     Scene scene = new Scene(root);
     fxCanvas.setScene(scene);
+
+    Thread listViewTextUpdateThread = new ListViewTextUpdateThread(listView);
+    listViewTextUpdateThread.start();
+
+    nameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
+    Thread tableViewUpdateThread = new TableViewUpdateThread(tableView);
+    tableViewUpdateThread.start();
   }
 
   private VBox getRoot() {
@@ -76,7 +89,7 @@ public class FXCanvasComposite extends Composite {
       }
     };
     return frameRateMeter;
-
   }
+
 
 }
