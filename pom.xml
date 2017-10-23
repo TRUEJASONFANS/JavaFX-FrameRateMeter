@@ -4,6 +4,16 @@
   <groupId>org.zhxie</groupId>
   <artifactId>org.zhxie.javaFxRateMeter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.fxml</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
   <profiles>
     <profile>
       <id>Windows-dev</id>
@@ -31,7 +41,14 @@
           <artifactId>jfxswt</artifactId>
           <version>1.0</version>
           <scope>system</scope>
-          <systemPath>${project.basedir}/lib/jfxswt.jar</systemPath>
+          <systemPath>${project.basedir}\lib\jfxswt.jar</systemPath>
+        </dependency>
+        <dependency>
+          <groupId>org.javafx</groupId>
+          <artifactId>jfxrt</artifactId>
+          <version>1.0</version>
+          <scope>system</scope>
+          <systemPath>${project.basedir}\lib\jfxrt.jar</systemPath>
         </dependency>
       </dependencies>
       <properties>
@@ -39,26 +56,74 @@
         <maven.compiler.source>1.8</maven.compiler.source>
       </properties>
       <build>
-        <resources>
-          <resource>
-            <directory>src</directory>
-            <excludes>
-              <exclude>**/*.java</exclude>
-            </excludes>
-          </resource>
-        </resources>
         <plugins>
           <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.5.1</version>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
             <configuration>
-              <source/>
-              <target/>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <excludeTransitive>false</excludeTransitive>
+              <stripVersion>false</stripVersion>
+            </configuration>
+            <executions>
+              <execution>
+                <id>copy-dependencies</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                  <excludeTransitive>false</excludeTransitive>
+                  <stripVersion>false</stripVersion>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.0.2</version>
+            <configuration>
+              <archive>
+                <manifest>
+                  <addClasspath>true</addClasspath>
+                  <classpathPrefix>lib/</classpathPrefix>
+                  <mainClass>org.zhxie.main.MyFXCanvasTest</mainClass>
+                </manifest>
+                <manifestEntries>
+                  <Class-Path>lib/jfxswt.jar,lib/jfxrt.jar</Class-Path>
+                </manifestEntries>
+              </archive>
             </configuration>
           </plugin>
+          <!--<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.3</version>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                <manifest>
+                  <mainClass>org.zhxie.main.MyFXCanvasTest</mainClass>
+                </manifest>
+              </archive>
+            </configuration>
+            <executions>
+              <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>assembly</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin> -->
         </plugins>
       </build>
     </profile>
-
   </profiles>
 </project>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+               <tabs>
+                  <Tab text="List">
+                     <content>
+                        <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+                  <Tab text="Table">
+                     <content>
+                        <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" fx:id="nameCol"/>
+                          </columns>
+                        </TableView>
+                     </content>
+                  </Tab>
+               </tabs></TabPane>
+         </children>
+      </HBox>
+      <Label fx:id="label" />
+   </children>
+</VBox>
