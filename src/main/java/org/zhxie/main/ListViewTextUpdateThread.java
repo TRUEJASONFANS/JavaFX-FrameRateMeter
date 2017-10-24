@@ -19,10 +19,12 @@ public class ListViewTextUpdateThread extends Thread {
 
   @Override
   public void run() {
-    while(true) {
+    while (!isInterrupted()) {
       try {
         sleep(500);
-        Platform.runLater(()->{inputs.add(getRandomString(3));});
+        Platform.runLater(() -> {
+          inputs.add(getRandomString(3));
+        });
       } catch (InterruptedException e) {
       }
     }

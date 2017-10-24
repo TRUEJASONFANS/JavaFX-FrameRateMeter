@@ -1,4 +1,4 @@
-package org.zhxie.component;
+package javafx.embed.swt;
 /*
  * Copyright (c) 2012, 2015, Oracle and/or its affiliates. All rights reserved.
  * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
@@ -96,7 +96,6 @@ import com.sun.javafx.stage.EmbeddedWindow;
 
 import javafx.application.Platform;
 import javafx.beans.NamedArg;
-import javafx.embed.swt.CustomTransfer;
 import javafx.scene.Scene;
 import javafx.scene.input.TransferMode;
 

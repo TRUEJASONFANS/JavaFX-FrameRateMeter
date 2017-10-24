@@ -7,11 +7,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.zhxie.component.OldFXCanvas;
 import org.zhxie.component.Recorder;
 
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.embed.swt.OldFXCanvas;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -52,6 +52,10 @@ public class FXCanvasComposite extends Composite {
     nameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
     Thread tableViewUpdateThread = new TableViewUpdateThread(tableView);
     tableViewUpdateThread.start();
+    
+    fxCanvas.addDisposeListener(e->{
+      //TODO: kill the thread
+    });
   }
 
   private VBox getRoot() {
