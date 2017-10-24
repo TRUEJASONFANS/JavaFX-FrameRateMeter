@@ -46,15 +46,17 @@ public class FXCanvasComposite extends Composite {
     Scene scene = new Scene(root);
     fxCanvas.setScene(scene);
 
-    Thread listViewTextUpdateThread = new ListViewTextUpdateThread(listView);
+    ListViewTextUpdateThread listViewTextUpdateThread = new ListViewTextUpdateThread(listView);
     listViewTextUpdateThread.start();
 
     nameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
-    Thread tableViewUpdateThread = new TableViewUpdateThread(tableView);
+    TableViewUpdateThread tableViewUpdateThread = new TableViewUpdateThread(tableView);
     tableViewUpdateThread.start();
     
-    fxCanvas.addDisposeListener(e->{
-      //TODO: kill the thread
+    fxCanvas.addDisposeListener(e -> {
+      tableViewUpdateThread.setStop(true);
+      listViewTextUpdateThread.setStop(true);
+      Recorder.setStop(true);
     });
   }
 

@@ -60,6 +60,8 @@ public class Recorder {
       }
     });
   }
+
+  public static boolean stop = false;
   
   private static class LogThread extends Thread {
     
@@ -81,7 +83,7 @@ public class Recorder {
 
     @Override
     public void run() {
-      while (true) {
+      while (!stop) {
         if (queue.isEmpty()) {
           try {
             Thread.sleep(50);
@@ -104,4 +106,12 @@ public class Recorder {
     }
     
   }
+
+  /**
+   * @param stop the stop to set
+   */
+  public static void setStop(boolean stop) {
+    Recorder.stop = stop;
+  }
+  
 }

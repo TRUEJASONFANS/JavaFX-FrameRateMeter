@@ -11,6 +11,7 @@ public class TableViewUpdateThread extends Thread {
 
   private TableView<String> tableView;
   private ObservableList<String> inputs = FXCollections.observableArrayList();
+  private boolean stop = false;
 
   public TableViewUpdateThread(TableView<String> tableView) {
     this.tableView = tableView;
@@ -19,7 +20,7 @@ public class TableViewUpdateThread extends Thread {
 
   @Override
   public void run() {
-    while (true) {
+    while (!stop ) {
       try {
         Thread.sleep(500);
         Platform.runLater(()->{
@@ -41,4 +42,12 @@ public class TableViewUpdateThread extends Thread {
     }
     return sb.toString();
   }
+
+  /**
+   * @param stop the stop to set
+   */
+  public void setStop(boolean stop) {
+    this.stop = stop;
+  }
+  
 }

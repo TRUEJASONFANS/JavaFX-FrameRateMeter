@@ -11,6 +11,7 @@ public class ListViewTextUpdateThread extends Thread {
 
   private ListView<String> listView;
   private ObservableList<String> inputs = FXCollections.observableArrayList();
+  private boolean stop = false;
 
   public ListViewTextUpdateThread(ListView<String> listView) {
     this.listView = listView;
@@ -19,7 +20,7 @@ public class ListViewTextUpdateThread extends Thread {
 
   @Override
   public void run() {
-    while (!isInterrupted()) {
+    while (!stop) {
       try {
         sleep(500);
         Platform.runLater(() -> {
@@ -40,4 +41,12 @@ public class ListViewTextUpdateThread extends Thread {
     }
     return sb.toString();
   }
+
+  /**
+   * @param stop the stop to set
+   */
+  public void setStop(boolean stop) {
+    this.stop = stop;
+  }
+  
 }
