@@ -13,7 +13,7 @@ import com.google.common.collect.Maps;
 import au.com.bytecode.opencsv.CSVWriter;
 
 public class Recorder {
-  
+
   private static class Request {
     private int width;
     private int height;
@@ -24,15 +24,15 @@ public class Recorder {
       this.number = number;
     }
   }
-  
+
   static {
     new LogThread().start();
   }
-  
+
   private static BlockingQueue<Request> queue = new LinkedBlockingQueue<>();
 
   private static final Map<String, CSVWriter> writers = Maps.newHashMap();
-  
+
   public static void log(int width, int height, String number) {
     try {
       queue.put(new Request(width, height, number));
@@ -41,7 +41,7 @@ public class Recorder {
       e.printStackTrace();
     }
   }
-  
+
   public static void close() {
     while (!queue.isEmpty()) {
       try {
@@ -62,10 +62,10 @@ public class Recorder {
   }
 
   public static boolean stop = false;
-  
+
   private static class LogThread extends Thread {
-    
-    
+
+
     private CSVWriter getWriter(int width, int height) {
       String filename = String.format("%dx%d.csv", width, height);
       CSVWriter writer = writers.get(filename);
@@ -83,7 +83,7 @@ public class Recorder {
 
     @Override
     public void run() {
-      while (!stop) {
+      while (!stop|| !queue.isEmpty()) {
         if (queue.isEmpty()) {
           try {
             Thread.sleep(50);
@@ -91,7 +91,7 @@ public class Recorder {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }
-          
+
         } else {
           try {
             Request request = queue.take();
@@ -104,7 +104,7 @@ public class Recorder {
         }
       }
     }
-    
+
   }
 
   /**
@@ -113,5 +113,5 @@ public class Recorder {
   public static void setStop(boolean stop) {
     Recorder.stop = stop;
   }
-  
+
 }
