@@ -22,9 +22,10 @@ public class TableViewUpdateThread extends Thread {
   public void run() {
     while (!stop ) {
       try {
-        Thread.sleep(500);
+        Thread.sleep(50);
         Platform.runLater(()->{
           inputs.add(getRandomString(3));
+          //tableView.scrollTo(10);
         });
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -49,5 +50,5 @@ public class TableViewUpdateThread extends Thread {
   public void setStop(boolean stop) {
     this.stop = stop;
   }
-  
+
 }

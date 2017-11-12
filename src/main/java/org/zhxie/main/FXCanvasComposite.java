@@ -16,9 +16,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
 public class FXCanvasComposite extends Composite {
@@ -29,7 +29,7 @@ public class FXCanvasComposite extends Composite {
   @FXML private Label label;
   @FXML private TableView<String> tableView;
   @FXML private TableColumn<String,String> nameCol;
-  @FXML private ListView<String> listView;
+  @FXML private TextArea textArea;
   private OldFXCanvas fxCanvas;
 
   public FXCanvasComposite(Composite container, int style, Shell shell) {
@@ -46,13 +46,13 @@ public class FXCanvasComposite extends Composite {
     Scene scene = new Scene(root);
     fxCanvas.setScene(scene);
 
-    ListViewTextUpdateThread listViewTextUpdateThread = new ListViewTextUpdateThread(listView);
+    ListViewTextUpdateThread listViewTextUpdateThread = new ListViewTextUpdateThread(textArea);
     listViewTextUpdateThread.start();
 
     nameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
     TableViewUpdateThread tableViewUpdateThread = new TableViewUpdateThread(tableView);
     tableViewUpdateThread.start();
-    
+
     fxCanvas.addDisposeListener(e -> {
       tableViewUpdateThread.setStop(true);
       listViewTextUpdateThread.setStop(true);
@@ -67,7 +67,7 @@ public class FXCanvasComposite extends Composite {
     try {
       root = fxmlLoader.load();
     } catch (IOException e) {
-      // LOGGER.error(e.getMessage());
+      e.printStackTrace();
     }
     return root;
   }

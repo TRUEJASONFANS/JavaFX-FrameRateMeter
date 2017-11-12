@@ -1,5 +1,7 @@
 package org.zhxie.main;
 
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
@@ -8,6 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.zhxie.component.Recorder;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 public class MyFXCanvasTest {
 
@@ -20,45 +23,57 @@ public class MyFXCanvasTest {
     SWTTestUtil.openShell(String.format("FX Canvas (%dx%d)", width, height), width, height,
         new Function<Shell, Control>() {
 
-          @Override
-          public Control apply(Shell shell) {
-            FXCanvasComposite fxCanvas = new FXCanvasComposite(shell, SWT.NONE, shell);
-            new Thread(new AsyRunnableTask(shell, 10000, 600, 400)).start();
-            new Thread(new AsyRunnableTask(shell, 20000, 300, 200)).start();
-            return fxCanvas;
-          }
+      @Override
+      public Control apply(Shell shell) {
+        FXCanvasComposite fxCanvas = new FXCanvasComposite(shell, SWT.NONE, shell);
+        ModifySizeThread modifySizeThread = new ModifySizeThread(shell);
+        modifySizeThread.addTask(600, 400);
+        modifySizeThread.addTask(400, 300);
+        modifySizeThread.addTask(0, 0);
+        modifySizeThread.start();
+        return fxCanvas;
+      }
 
-        });
+    });
     Recorder.close();
   }
 
-  public static class AsyRunnableTask implements Runnable {
+  public static class ModifySizeThread extends Thread {
 
     private Shell shell;
-    private long sleepMillsec;
-    private int width;
-    private int height;
+    private static List<Point> queue = Lists.newArrayList();
 
-    public AsyRunnableTask(Shell shell, long sleepMillsec, int width, int height) {
+    public ModifySizeThread(Shell shell) {
       super();
       this.shell = shell;
-      this.sleepMillsec = sleepMillsec;
-      this.width = width;
-      this.height = height;
+
+    }
+
+    public void addTask(int width, int height) {
+      queue.add(new Point(width, height));
     }
 
     @Override
     public void run() {
-      try {
-        Thread.sleep(sleepMillsec);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      Display.getDefault().syncExec(() -> {
-        if (!shell.isDisposed()) {
-          shell.setSize(new Point(width, height));
+      for(Point p : queue) {
+        int width = p.x;
+        int height = p.y;
+        try {
+          Thread.sleep(10000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
         }
-      });
+        Display.getDefault().syncExec(() -> {
+          if (!shell.isDisposed()) {
+            if(width ==0 && height ==0) {
+              shell.close();
+            }
+            else {
+              shell.setSize(new Point(width, height));
+            }
+          }
+        });
+      }
     }
   }
 
