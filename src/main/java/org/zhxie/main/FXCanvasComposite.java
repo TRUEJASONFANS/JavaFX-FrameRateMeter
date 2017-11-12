@@ -6,7 +6,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 import org.zhxie.component.Recorder;
 
 import javafx.animation.AnimationTimer;
@@ -32,16 +31,13 @@ public class FXCanvasComposite extends Composite {
   @FXML private TextArea textArea;
   private OldFXCanvas fxCanvas;
 
-  public FXCanvasComposite(Composite container, int style, Shell shell) {
+  public FXCanvasComposite(Composite container, int style) {
     super(container, style);
     this.setLayout(new GridLayout(1, false));
     fxCanvas = new OldFXCanvas(this, SWT.NONE);
     fxCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     VBox root = getRoot();
     AnimationTimer frameRateMeter = createAnimationTimer(label);
-    label.textProperty().addListener(e -> {
-      Recorder.log(shell.getSize().x, shell.getSize().y, label.textProperty().getValue());
-    });
     frameRateMeter.start();
     Scene scene = new Scene(root);
     fxCanvas.setScene(scene);
@@ -90,6 +86,8 @@ public class FXCanvasComposite extends Composite {
           double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame;
           if (!fxCanvas.isDisposed()) {
             label.setText(String.format("%.3f", frameRate));
+            Recorder.log(FXCanvasComposite.this.getShell().getSize().x, FXCanvasComposite.this.getShell().getSize().y,
+                label.getText());
           }
         }
       }

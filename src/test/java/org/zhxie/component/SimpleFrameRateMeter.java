@@ -53,8 +53,8 @@ public class SimpleFrameRateMeter extends Application {
     AnchorPane root = getRoot();
     VBox vBox = new VBox();
     vBox.getChildren().addAll(root, label);
-    root.setPrefHeight(height);
-    root.setPrefWidth(width);
+    root.setPrefHeight(200);
+    root.setPrefWidth(300);
     VBox.setVgrow(root, Priority.ALWAYS);
     primaryStage.setScene(new Scene(vBox));
     primaryStage.show();

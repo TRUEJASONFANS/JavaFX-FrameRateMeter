@@ -25,10 +25,10 @@ public class MyFXCanvasTest {
 
       @Override
       public Control apply(Shell shell) {
-        FXCanvasComposite fxCanvas = new FXCanvasComposite(shell, SWT.NONE, shell);
+        FXCanvasComposite fxCanvas = new FXCanvasComposite(shell, SWT.NONE);
         ModifySizeThread modifySizeThread = new ModifySizeThread(shell);
         modifySizeThread.addTask(600, 400);
-        modifySizeThread.addTask(400, 300);
+        modifySizeThread.addTask(300, 200);
         modifySizeThread.addTask(0, 0);
         modifySizeThread.start();
         return fxCanvas;
@@ -59,7 +59,7 @@ public class MyFXCanvasTest {
         int width = p.x;
         int height = p.y;
         try {
-          Thread.sleep(10000);
+          Thread.sleep(15000);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }

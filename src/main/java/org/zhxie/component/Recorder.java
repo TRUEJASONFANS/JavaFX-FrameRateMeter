@@ -67,12 +67,12 @@ public class Recorder {
 
 
     private CSVWriter getWriter(int width, int height) {
-      String filename = String.format("%dx%d.csv", width, height);
+      String filename = String.format("%s_%dx%d.csv", System.getProperty("user.name"), width, height);
       CSVWriter writer = writers.get(filename);
       if (writer == null) {
         try {
           writer = new CSVWriter(new FileWriter(new File(filename)), ',', '"');
-          writer.writeNext(new String[] {"FPS"});
+          writer.writeNext(new String[] { "FPS" });
           writers.put(filename, writer);
         } catch (IOException e) {
           e.printStackTrace();
