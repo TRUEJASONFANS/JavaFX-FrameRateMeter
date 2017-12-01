@@ -1,9 +1,9 @@
-package org.zhxie.component;
-
+package org.zhxie.record;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -18,6 +18,7 @@ public class Recorder {
     private int width;
     private int height;
     private String number;
+
     Request(int width, int height, String number) {
       this.width = width;
       this.height = height;
@@ -65,9 +66,10 @@ public class Recorder {
 
   private static class LogThread extends Thread {
 
-
     private CSVWriter getWriter(int width, int height) {
-      String filename = String.format("%s_%dx%d.csv", System.getProperty("user.name"), width, height);
+      Date date = new Date();
+      String filename = String.format("%s%tF_%tR_%dx%d.csv", System.getProperty("user.name"), date, date, width,
+          height);
       CSVWriter writer = writers.get(filename);
       if (writer == null) {
         try {
@@ -83,7 +85,7 @@ public class Recorder {
 
     @Override
     public void run() {
-      while (!stop|| !queue.isEmpty()) {
+      while (!stop || !queue.isEmpty()) {
         if (queue.isEmpty()) {
           try {
             Thread.sleep(50);
@@ -96,7 +98,7 @@ public class Recorder {
           try {
             Request request = queue.take();
             CSVWriter writer = getWriter(request.width, request.height);
-            writer.writeNext(new String[] {String.valueOf(request.number)});
+            writer.writeNext(new String[] { String.valueOf(request.number) });
           } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -108,7 +110,8 @@ public class Recorder {
   }
 
   /**
-   * @param stop the stop to set
+   * @param stop
+   *          the stop to set
    */
   public static void setStop(boolean stop) {
     Recorder.stop = stop;

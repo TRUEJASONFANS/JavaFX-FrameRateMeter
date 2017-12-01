@@ -7,7 +7,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.zhxie.component.Recorder;
+import org.zhxie.record.Recorder;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -20,7 +20,7 @@ public class MyFXCanvasTest {
   }
 
   private static void open(final int width, final int height) {
-    SWTTestUtil.openShell(String.format("FX Canvas (%dx%d)", width, height), width, height,
+    SWTTestUtil.openShell(String.format("FX Canvas Frame Rater (%dx%d)", width, height), width, height,
         new Function<Shell, Control>() {
 
       @Override

@@ -6,7 +6,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.zhxie.component.Recorder;
+import org.zhxie.record.Recorder;
 
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleStringProperty;
