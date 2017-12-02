@@ -4,6 +4,7 @@ package org.zhxie.component;
 import java.io.IOException;
 
 import org.zhxie.main.MyFXCanvasTest;
+import org.zhxie.record.Recorder;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
