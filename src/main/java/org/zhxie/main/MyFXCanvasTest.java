@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.zhxie.component.Recorder;
+import org.zhxie.fxcanvas.FXCanvasComposite;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
