@@ -7,6 +7,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.zhxie.fxcanvas.FXCanvasComposite;
 import org.zhxie.record.Recorder;
 
 import com.google.common.base.Function;

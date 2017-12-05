@@ -6,9 +6,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.zhxie.component.Recorder;
-import org.zhxie.main.MyFXCanvasTest;
+import org.zhxie.record.Recorder;
 
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleStringProperty;
@@ -30,7 +28,7 @@ public class FXCanvasComposite extends Composite {
   @FXML private TextArea textArea;
   private OldFXCanvas fxCanvas;
 
-  public FXCanvasComposite(Composite container, int style, Shell shell) {
+  public FXCanvasComposite(Composite container, int style) {
     super(container, style);
     this.setLayout(new GridLayout(1, false));
     fxCanvas = new OldFXCanvas(this, SWT.NONE);
@@ -38,7 +36,8 @@ public class FXCanvasComposite extends Composite {
     VBox root = getRoot();
     AnimationTimer frameRateMeter = createAnimationTimer(label);
     label.textProperty().addListener(e -> {
-      Recorder.log(shell.getSize().x, shell.getSize().y, label.textProperty().getValue());
+      Recorder.log(FXCanvasComposite.this.getShell().getSize().x, FXCanvasComposite.this.getShell().getSize().y,
+          label.textProperty().getValue());
     });
     frameRateMeter.start();
     Scene scene = new Scene(root);
@@ -59,7 +58,7 @@ public class FXCanvasComposite extends Composite {
   }
 
   private VBox getRoot() {
-    FXMLLoader fxmlLoader = new FXMLLoader(MyFXCanvasTest.class.getResource("FXCanvasComposite.fxml"));
+    FXMLLoader fxmlLoader = new FXMLLoader(FXCanvasComposite.class.getResource("FXCanvasComposite.fxml"));
     fxmlLoader.setController(this);
     VBox root = null;
     try {
